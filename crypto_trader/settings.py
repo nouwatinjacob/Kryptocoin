@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-3u&a3ncxlg0!5=uevpno2#@fptdebd9+ez&an*)lcm!3c^p+xm
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['kryptocoinhub.org', 'www.kryptocoinhub.org']
 
 
 # Application definition
