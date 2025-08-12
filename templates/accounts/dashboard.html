@@ -1,0 +1,490 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- Dashboard Header -->
+<section class="features" style="padding: 80px 0 20px 0; background: #111;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <h2 class="dashboard-title">Dashboard</h2>
+                <p class="welcome-text">Welcome back, <strong>{{ user.username }}</strong></p>
+            </div>
+            <div class="col-md-4 text-right">
+              <form method="post" action="{% url 'accounts:logout' %}" style="display: inline;">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-danger" id="logout-btn">
+                      <i class="fa fa-sign-out"></i> Logout
+                  </button>
+              </form>
+                
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Portfolio Balance Section -->
+<section style="padding: 20px 0; background: #111;">
+    <div class="container">
+        <!-- Total Balance Card -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="balance-card">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h3 class="balance-title">Total Portfolio Value</h3>
+                            <div class="balance-amount">
+                                <span id="total-balance-usd">$12,847.50</span>
+                                <small class="profit-indicator">
+                                    <i class="fa fa-arrow-up"></i> +2.45% (24h)
+                                </small>
+                            </div>
+                            <p class="btc-equivalent">≈ <span id="total-balance-btc">0.2847</span> BTC</p>
+                        </div>
+                        <div class="col-md-4 text-right">
+                            <div class="balance-actions">
+                                <button class="btn btn-success crypto-action-btn" data-toggle="modal" data-target="#depositModal">
+                                    <i class="fa fa-arrow-down"></i> Deposit
+                                </button>
+                                <button class="btn btn-warning crypto-action-btn" data-toggle="modal" data-target="#withdrawModal">
+                                    <i class="fa fa-arrow-up"></i> Withdraw
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="row stats-row">
+            <div class="col-md-3 col-sm-6">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fa fa-wallet"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h4>Available Balance</h4>
+                        <p>$8,450.00</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fa fa-lock"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h4>In Orders</h4>
+                        <p>$4,397.50</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fa fa-line-chart"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h4>Today's P&L</h4>
+                        <p class="profit-text">+$234.80</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fa fa-exchange"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h4>24h Volume</h4>
+                        <p>$1,847.20</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Portfolio Holdings -->
+<section style="padding: 30px 0; background: #0a0a0a;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h4>My Holdings</h4>
+                        <div class="card-actions">
+                            <button class="btn btn-sm btn-primary crypto-btn">Trade</button>
+                            <button class="btn btn-sm btn-outline-secondary crypto-btn">Convert</button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table holdings-table crypto-table">
+                                <thead>
+                                    <tr>
+                                        <th>Asset</th>
+                                        <th>Balance</th>
+                                        <th>USD Value</th>
+                                        <th>24h Change</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="holdings-table">
+                                    <tr>
+                                        <td>
+                                            <div class="asset-info">
+                                                <img src="https://cryptologos.cc/logos/bitcoin-btc-logo.png" alt="BTC" class="asset-icon">
+                                                <div>
+                                                    <strong>Bitcoin</strong>
+                                                    <small>BTC</small>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <strong>0.15847632</strong>
+                                            <small>BTC</small>
+                                        </td>
+                                        <td>
+                                            <strong>$6,847.50</strong>
+                                        </td>
+                                        <td class="profit-text">+2.45%</td>
+                                        <td>
+                                            <button class="btn btn-xs btn-primary crypto-btn">Buy</button>
+                                            <button class="btn btn-xs btn-danger crypto-btn">Sell</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="asset-info">
+                                                <img src="https://cryptologos.cc/logos/ethereum-eth-logo.png" alt="ETH" class="asset-icon">
+                                                <div>
+                                                    <strong>Ethereum</strong>
+                                                    <small>ETH</small>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <strong>2.45892134</strong>
+                                            <small>ETH</small>
+                                        </td>
+                                        <td>
+                                            <strong>$4,200.00</strong>
+                                        </td>
+                                        <td class="profit-text">+1.82%</td>
+                                        <td>
+                                            <button class="btn btn-xs btn-primary crypto-btn">Buy</button>
+                                            <button class="btn btn-xs btn-danger crypto-btn">Sell</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="asset-info">
+                                                <img src="https://cryptologos.cc/logos/tether-usdt-logo.png" alt="USDT" class="asset-icon">
+                                                <div>
+                                                    <strong>Tether</strong>
+                                                    <small>USDT</small>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <strong>1,800.00</strong>
+                                            <small>USDT</small>
+                                        </td>
+                                        <td>
+                                            <strong>$1,800.00</strong>
+                                        </td>
+                                        <td class="neutral-text">0.00%</td>
+                                        <td>
+                                            <button class="btn btn-xs btn-primary crypto-btn">Buy</button>
+                                            <button class="btn btn-xs btn-danger crypto-btn">Sell</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Quick Actions Sidebar -->
+            <div class="col-md-4">
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h4>Quick Actions</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="quick-action">
+                            <div class="action-icon deposit-icon">
+                                <i class="fa fa-arrow-down"></i>
+                            </div>
+                            <div class="action-content">
+                                <h5>Deposit Crypto</h5>
+                                <p>Add funds to your wallet</p>
+                                <button class="btn btn-success crypto-btn btn-sm">Deposit</button>
+                            </div>
+                        </div>
+                        
+                        <div class="quick-action">
+                            <div class="action-icon withdraw-icon">
+                                <i class="fa fa-arrow-up"></i>
+                            </div>
+                            <div class="action-content">
+                                <h5>Withdraw</h5>
+                                <p>Transfer to external wallet</p>
+                                <button class="btn btn-warning crypto-btn btn-sm">Withdraw</button>
+                            </div>
+                        </div>
+                        
+                        <div class="quick-action">
+                            <div class="action-icon convert-icon">
+                                <i class="fa fa-exchange"></i>
+                            </div>
+                            <div class="action-content">
+                                <h5>Convert</h5>
+                                <p>Swap between currencies</p>
+                                <button class="btn btn-info crypto-btn btn-sm">Convert</button>
+                            </div>
+                        </div>
+                        
+                        <div class="quick-action">
+                            <div class="action-icon buy-icon">
+                                <i class="fa fa-credit-card"></i>
+                            </div>
+                            <div class="action-content">
+                                <h5>Buy with Card</h5>
+                                <p>Purchase crypto instantly</p>
+                                <button class="btn btn-primary crypto-btn btn-sm">Buy Now</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Market Summary -->
+                <div class="dashboard-card market-summary-card">
+                    <div class="card-header">
+                        <h4>Market Summary</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="market-item">
+                            <span>Bitcoin</span>
+                            <span class="float-right">
+                                <strong id="btc-price">$43,250.00</strong>
+                                <small class="profit-text">+2.45%</small>
+                            </span>
+                        </div>
+                        <div class="market-item">
+                            <span>Ethereum</span>
+                            <span class="float-right">
+                                <strong id="eth-price">$1,708.50</strong>
+                                <small class="profit-text">+1.82%</small>
+                            </span>
+                        </div>
+                        <div class="market-item">
+                            <span>BNB</span>
+                            <span class="float-right">
+                                <strong id="bnb-price">$248.90</strong>
+                                <small class="loss-text">-0.54%</small>
+                            </span>
+                        </div>
+                        <div class="market-item">
+                            <span>Solana</span>
+                            <span class="float-right">
+                                <strong id="sol-price">$98.45</strong>
+                                <small class="profit-text">+3.12%</small>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Recent Activity -->
+<section style="padding: 30px 0; background: #111;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h4>Recent Activity</h4>
+                        <a href="#" class="view-all">View All</a>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table activity-table crypto-table">
+                                <thead>
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Asset</th>
+                                        <th>Amount</th>
+                                        <th>Status</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <span class="activity-type deposit">
+                                                <i class="fa fa-arrow-down"></i> Deposit
+                                            </span>
+                                        </td>
+                                        <td>Bitcoin (BTC)</td>
+                                        <td>0.05847632 BTC</td>
+                                        <td><span class="badge badge-success">Completed</span></td>
+                                        <td>2 hours ago</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span class="activity-type trade">
+                                                <i class="fa fa-exchange"></i> Trade
+                                            </span>
+                                        </td>
+                                        <td>ETH → USDT</td>
+                                        <td>1.2 ETH</td>
+                                        <td><span class="badge badge-success">Completed</span></td>
+                                        <td>5 hours ago</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span class="activity-type withdraw">
+                                                <i class="fa fa-arrow-up"></i> Withdraw
+                                            </span>
+                                        </td>
+                                        <td>Tether (USDT)</td>
+                                        <td>500.00 USDT</td>
+                                        <td><span class="badge badge-warning">Pending</span></td>
+                                        <td>1 day ago</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Withdraw Modal -->
+<div class="modal fade" id="withdrawModal" tabindex="-1" role="dialog" aria-labelledby="withdrawModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content professional-modal">
+      <!-- Modal Header -->
+      <div class="modal-header professional-header">
+        <div class="header-content">
+          <div class="modal-icon">
+            <i class="fa fa-shield"></i> <!-- replaced fa-shield-alt -->
+          </div>
+          <div class="header-text">
+            <h4 class="modal-title" id="withdrawModalLabel">Account Activation Required</h4>
+            <p class="modal-subtitle">Secure your account with Bitcoin verification</p>
+          </div>
+        </div>
+        <button type="button" class="close professional-close" data-dismiss="modal" aria-label="Close">
+          <i class="fa fa-times"></i>
+        </button>
+      </div>
+      
+      <!-- Modal Body -->
+      <div class="modal-body professional-body">
+        <!-- Info Section -->
+        <div class="activation-info">
+          <div class="info-card">
+            <div class="info-icon">
+              <i class="fa fa-btc"></i> <!-- fa-bitcoin replaced with fa-btc in FA4 -->
+            </div>
+            <div class="info-content">
+              <h5>Bitcoin Payment Required</h5>
+              <p>To activate your account and enable withdrawals, please send exactly <strong class="highlight-amount">$1,000 USD</strong> worth of Bitcoin to the address below.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Payment Details -->
+        <div class="payment-section">
+          <div class="payment-card">
+            <div class="payment-header">
+              <h6><i class="fa fa-credit-card"></i> Payment Address</h6> <!-- fa-wallet replaced -->
+              <div class="network-badge">
+                <i class="fa fa-btc"></i> Bitcoin Network
+              </div>
+            </div>
+            
+            <!-- Bitcoin Address -->
+            <div class="address-container">
+              <div class="address-input-group">
+                <input type="text" id="btc-address" class="form-control address-input" 
+                       value="1JNH4utcnN1qxVTAF9ik7DFijBSUqUsAFV" readonly>
+                <button class="btn copy-btn" onclick="copyAddress()" id="copy-btn">
+                  <i class="fa fa-clone"></i> <!-- fa-copy replaced with fa-clone -->
+                  <span class="copy-text">Copy</span>
+                </button>
+              </div>
+              <div class="copy-feedback" id="copy-feedback">Address copied to clipboard!</div>
+            </div>
+
+            <!-- QR Code Section -->
+            <div class="qr-section">
+              <div class="qr-container">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?data=bitcoin:1JNH4utcnN1qxVTAF9ik7DFijBSUqUsAFV&size=160x160&bgcolor=ffffff&color=000000" 
+                     alt="Bitcoin QR Code" class="qr-code">
+                <p class="qr-label">Scan with your Bitcoin wallet</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Important Notes -->
+        <div class="important-notes">
+          <div class="note-item">
+            <i class="fa fa-exclamation-triangle"></i>
+            <span>Send only Bitcoin (BTC) to this address</span>
+          </div>
+          <div class="note-item">
+            <i class="fa fa-clock-o"></i> <!-- fa-clock replaced with fa-clock-o -->
+            <span>Activation typically takes 10-30 minutes after payment</span>
+          </div>
+          <div class="note-item">
+            <i class="fa fa-shield"></i> <!-- fa-shield-check replaced -->
+            <span>Your funds are secured with multi-signature technology</span>
+          </div>
+        </div>
+
+        <!-- Payment Status -->
+        <div id="payment-status" class="payment-status"></div>
+      </div>
+      
+      <!-- Modal Footer -->
+      <div class="modal-footer professional-footer">
+        <div class="footer-actions">
+          <button type="button" class="btn btn-secondary cancel-btn" data-dismiss="modal">
+            <i class="fa fa-times"></i> Cancel
+          </button>
+          <button type="button" class="btn btn-primary activate-btn" onclick="checkPayment()">
+            <i class="fa fa-search"></i> Check Payment Status
+          </button>
+        </div>
+        <div class="footer-note">
+          <i class="fa fa-info-circle"></i>
+          Need help? <a href="#" class="help-link">Contact Support</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
+
+{% block extra_css %}
+<!-- Dashboard Styles -->
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/dashboard.js' %}"></script>
+{% endblock %}
