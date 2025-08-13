@@ -7,11 +7,11 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 class LoginForm(AuthenticationForm):
-    username = forms.EmailField(  # this is actually "username" internally, but email for you
-        label="Email",
-        widget=forms.EmailInput(attrs={
+    username = forms.CharField(
+        label="Username",
+        widget=forms.TextInput(attrs={
             "class": "form-control",
-            "placeholder": "EMAIL",
+            "placeholder": "USERNAME",
             "required": "required"
         })
     )

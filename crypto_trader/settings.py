@@ -57,6 +57,12 @@ MIDDLEWARE = [
     'django_browser_reload.middleware.BrowserReloadMiddleware',
 ]
 
+
+AUTHENTICATION_BACKENDS = [
+    'accounts.backends.UsernameAuthBackend',  # app_name.backends.ClassName
+    'django.contrib.auth.backends.ModelBackend',
+]
+
 ROOT_URLCONF = 'crypto_trader.urls'
 
 TEMPLATES = [

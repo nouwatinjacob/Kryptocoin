@@ -154,13 +154,13 @@ function setupButtonActions() {
             setTimeout(() => this.style.transform = 'scale(1)', 150);
 
             if (action.includes('Deposit')) {
-                alert('Deposit functionality would open here');
+                alert('Activate your account to be able to Deposit funds');
             } else if (action.includes('Buy') || action.includes('Sell')) {
-                alert(`${action} functionality would open here`);
+                alert(`Activate your account to use the ${action} feature`);
             } else if (action.includes('Trade')) {
-                alert('Trade functionality would open here');
+                alert('Activate your account to use the Trade feature');
             } else if (action.includes('Convert')) {
-                alert('Convert functionality would open here');
+                alert('Activate your account to use the Convert feature');
             }
         });
     });

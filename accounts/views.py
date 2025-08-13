@@ -19,7 +19,7 @@ def login_view(request):
             messages.success(request, "Login successful!")
             return redirect('accounts:dashboard')
         else:
-            messages.error(request, "Invalid email or password.")
+            messages.error(request, "Invalid username or password.")
     else:
         form = LoginForm()
     return render(request, 'accounts/login.html', {'form': form, 'hide_layout': True,})

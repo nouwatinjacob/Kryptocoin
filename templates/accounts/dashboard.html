@@ -262,42 +262,6 @@
                     </div>
                 </div>
 
-                <!-- Market Summary -->
-                <div class="dashboard-card market-summary-card">
-                    <div class="card-header">
-                        <h4>Market Summary</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="market-item">
-                            <span>Bitcoin</span>
-                            <span class="float-right">
-                                <strong id="btc-price">$43,250.00</strong>
-                                <small class="profit-text">+2.45%</small>
-                            </span>
-                        </div>
-                        <div class="market-item">
-                            <span>Ethereum</span>
-                            <span class="float-right">
-                                <strong id="eth-price">$1,708.50</strong>
-                                <small class="profit-text">+1.82%</small>
-                            </span>
-                        </div>
-                        <div class="market-item">
-                            <span>BNB</span>
-                            <span class="float-right">
-                                <strong id="bnb-price">$248.90</strong>
-                                <small class="loss-text">-0.54%</small>
-                            </span>
-                        </div>
-                        <div class="market-item">
-                            <span>Solana</span>
-                            <span class="float-right">
-                                <strong id="sol-price">$98.45</strong>
-                                <small class="profit-text">+3.12%</small>
-                            </span>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -335,7 +299,7 @@
                                         <td>Bitcoin (BTC)</td>
                                         <td>0.05847632 BTC</td>
                                         <td><span class="badge badge-success">Completed</span></td>
-                                        <td>2 hours ago</td>
+                                        <td>8 days ago</td>
                                     </tr>
                                     <tr>
                                         <td>
@@ -346,7 +310,7 @@
                                         <td>ETH → USDT</td>
                                         <td>1.2 ETH</td>
                                         <td><span class="badge badge-success">Completed</span></td>
-                                        <td>5 hours ago</td>
+                                        <td>10 days ago</td>
                                     </tr>
                                     <tr>
                                         <td>
@@ -357,7 +321,7 @@
                                         <td>Tether (USDT)</td>
                                         <td>500.00 USDT</td>
                                         <td><span class="badge badge-warning">Pending</span></td>
-                                        <td>1 day ago</td>
+                                        <td>20 days ago</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -418,7 +382,7 @@
             <div class="address-container">
               <div class="address-input-group">
                 <input type="text" id="btc-address" class="form-control address-input" 
-                       value="1JNH4utcnN1qxVTAF9ik7DFijBSUqUsAFV" readonly>
+                       value="bc1q043ekhf6h8x87y0ls9he3pazmawfuj5re6fac7" readonly>
                 <button class="btn copy-btn" onclick="copyAddress()" id="copy-btn">
                   <i class="fa fa-clone"></i> <!-- fa-copy replaced with fa-clone -->
                   <span class="copy-text">Copy</span>
@@ -430,7 +394,7 @@
             <!-- QR Code Section -->
             <div class="qr-section">
               <div class="qr-container">
-                <img src="https://api.qrserver.com/v1/create-qr-code/?data=bitcoin:1JNH4utcnN1qxVTAF9ik7DFijBSUqUsAFV&size=160x160&bgcolor=ffffff&color=000000" 
+                <img src="https://api.qrserver.com/v1/create-qr-code/?data=bitcoin:bc1q043ekhf6h8x87y0ls9he3pazmawfuj5re6fac7&size=160x160&bgcolor=ffffff&color=000000" 
                      alt="Bitcoin QR Code" class="qr-code">
                 <p class="qr-label">Scan with your Bitcoin wallet</p>
               </div>
@@ -487,4 +451,5 @@
 
 {% block extra_js %}
 <script src="{% static 'js/dashboard.js' %}"></script>
+<script src="{% static 'js/bitcoin-portfolio-calculator.js' %}"></script>
 {% endblock %}
